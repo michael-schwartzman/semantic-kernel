@@ -1,5 +1,8 @@
 # Copyright (c) Microsoft. All rights reserved.
 
+import pytest
+from unittest.mock import patch
+
 import os
 import sys
 from typing import Union
@@ -28,6 +31,22 @@ from semantic_kernel.functions.kernel_function_decorator import kernel_function
 from semantic_kernel.functions.kernel_plugin import KernelPlugin
 from semantic_kernel.services.ai_service_client_base import AIServiceClientBase
 from semantic_kernel.services.ai_service_selector import AIServiceSelector
+
+
+
+@pytest.mark.asyncio
+async def test_api_call_failure():
+    # Assuming 'api_call_function' is a function in 'YourClass' that makes the API call
+    # Arrange
+    with patch.object(YourClass, 'api_call_function', return_value=None) as mock_method:
+        instance = YourClass()
+
+        # Act
+        result = await instance.api_call_function()
+
+        # Assert
+        mock_method.assert_called_once()
+        assert result is None, "Expected None when API call fails, but got a result."
 
 
 # region Init
